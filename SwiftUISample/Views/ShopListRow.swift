@@ -1,0 +1,46 @@
+//
+//  ShopListRow.swift
+//  SwiftUISample
+//
+//  Created by Masanao Imai on 2020/03/11.
+//  Copyright © 2020 Masanao Imai. All rights reserved.
+//
+
+import SwiftUI
+import ImageLoader
+
+struct ShopListRow: View {
+    var shop: Shop
+    var body: some View {
+        HStack(alignment: .top) {
+            ZStack {
+                // Point: 画像読み込み前に、領域を確保しないとセルが潰れてしまうため。
+                Image("photo").resizable().frame(width: 100, height: 100)
+                URLImage(url: shop.mobile.smallPhoto).frame(width: 100, height: 100)
+            }
+            VStack(alignment: .leading, spacing: 10) {
+                Text(shop.name)
+                    .environment(\.lineSpacing, 2)
+                    .font(.system(size: 18))
+                Text(shop.catchCopy)
+                    .environment(\.lineSpacing, 2)
+                    .font(.system(size: 13))
+            }
+        }
+    }
+}
+
+struct ShopListRow_Previews: PreviewProvider {
+
+    static var mobile = Photo.Mobile(largePhoto:"https://imgfp.hotp.jp/IMGH/05/91/P034400591/P034400591_168.jpg", smallPhoto:"https://imgfp.hotp.jp/IMGH/05/91/P034400591/P034400591_100.jpg")
+
+    static var pc = Photo.Pc(largePhoto:"https://imgfp.hotp.jp/IMGH/05/91/P034400591/P034400591_238.jpg")
+
+    
+    static var shop = Shop(id : "1", name : "Salt Water ソルトウォーター by David Myers ガーデンプレイス", address : "東京都渋谷区恵比寿４-20-4 恵比寿ガーデンプレイス　GLASS SQUARE B1F", access : "恵比寿駅ガーデンプレイス口徒歩3分！GLASS　SQUARE　B1Fにございます。屋根があるので雨の日も濡れずに安心！", lat : 35.6422404517, lng : 139.7130248161, catchCopy : "女子会限定デザートアート 記念日/デート/合コンに♪", photo : Photo(mobile: mobile, pc: pc)
+    )
+    
+    static var previews: some View {
+        ShopListRow(shop: shop)
+    }
+}
